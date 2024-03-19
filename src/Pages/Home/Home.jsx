@@ -1,6 +1,5 @@
 import React from "react";
 import "./Home.css";
-import { images } from "../../image";
 
 const HomePage = () => {
   return (
