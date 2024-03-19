@@ -6,7 +6,7 @@ const HomePage = () => {
     <div className="home-page">
       <div className="image-container">
         <img
-          src="../../../public/images/homepic.png"
+          src="../../../public/homepic.png"
           alt="Clinic"
           className="clinic-image"
         />
