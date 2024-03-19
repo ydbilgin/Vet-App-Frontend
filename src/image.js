@@ -1,5 +1,5 @@
-import homepic from "./assets/images/homepic.png";
-import appicon from "./assets/images/appicon.png";
+import homepic from "../public/homepic";
+import appicon from "../public/appicon";
 
 export const images = [
   {
