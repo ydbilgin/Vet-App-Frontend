@@ -5,7 +5,7 @@ const HomePage = () => {
   return (
     <div className="home-page">
       <div className="image-container">
-        <img src="/homepic.png" alt="Clinic" className="clinic-image" />
+        <img src="/images/homepic.png" alt="Clinic" className="clinic-image" />
       </div>
       <div className="home-content">
         <h1 className="welcome-title">Patişah Veteriner Kliniği</h1>
