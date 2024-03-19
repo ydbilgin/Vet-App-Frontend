@@ -1,15 +1,12 @@
 import React from "react";
 import "./Home.css";
+import images from "../../assets/images/images";
 
 const HomePage = () => {
   return (
     <div className="home-page">
       <div className="image-container">
-        <img
-          src="./src/assets/home-pic.webp"
-          alt="Clinic"
-          className="clinic-image"
-        />
+        <img src={images[0]} alt="Clinic" className="clinic-image" />
       </div>
       <div className="home-content">
         <h1 className="welcome-title">Patişah Veteriner Kliniği</h1>

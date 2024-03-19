@@ -50,7 +50,11 @@ function Navbar() {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Link to="/home" style={{ textDecoration: "none", color: "inherit" }}>
-            <img className="logo" src="./src/assets/app-icon.png" alt="logo" />
+            <img
+              className="logo"
+              src="./src/assets/images/app-icon.png"
+              alt="logo"
+            />
           </Link>
           <Typography
             variant="h6"

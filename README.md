@@ -1,8 +1,25 @@
-# React + Vite
+# Veteriner Uygulaması
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Açıklama
 
-Currently, two official plugins are available:
+Bu proje, hem frontend hem backend kullanarak veterinerlerin müşteri ve hayvan verilerini yönetmelerine olanak sağlayan bir uygulamadır. Veterinerler müşterilerini ve müşterilere ait hayvanları ve doktorları ekleyebilir, güncelleyebilir, silebilir ve arayabilirler. Ayrıca randevu oluşturabilir, aşı ekleyebilir ve takip edebilirler.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Kullanılan Teknolojiler
+
+Spring Boot
+React
+PostgreSQL
+Axios
+Lombok
+
+## Kullanım Linki (FrontEnd)
+
+https://vet-app-frontend-fawn.vercel.app/
+
+## Backend Linki
+
+https://veterinerappbackend.onrender.com/
+
+## Github Backend
+
+https://github.com/ydbilgin/VeterinerAppBackend
