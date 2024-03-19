@@ -1,0 +1,118 @@
+.report-container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 20px auto;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  border: 2px solid #ddd;
+  background-color: white;
+}
+
+.report-list {
+  display: grid;
+  grid-gap: 20px;
+
+  padding: 20px;
+  width: 100%;
+  overflow-x: auto;
+}
+
+.report-list-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.report-list-table th,
+.report-list-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.report-list-table th {
+  background-color: #f2f2f2;
+}
+
+.report-inputs {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 10px;
+  margin: 0px 30px;
+}
+
+.report-inputs input {
+  padding: 5px;
+}
+
+.report-inputs select {
+  padding: 5px;
+}
+.report-add-button {
+  padding: 10px 40px;
+  background-color: #4698eb;
+  color: white;
+  border: none;
+  cursor: pointer;
+  justify-self: end;
+}
+
+.report-update-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.report-inputs {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.report-inputs input[type="text"],
+.report-inputs input[type="number"],
+.report-inputs select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.report-inputs select {
+  cursor: pointer;
+}
+
+.report-inputs button.report-update-button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.report-inputs button.report-update-button:hover {
+  background-color: #0056b3;
+}
+.report-search {
+  margin-bottom: 20px;
+}
+
+.report-search input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 300px;
+  font-size: 16px;
+}
+
+.report-search input:focus {
+  outline: none;
+  border-color: #007bff;
+}

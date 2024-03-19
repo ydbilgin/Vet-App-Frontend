@@ -1,0 +1,143 @@
+.doctor-container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 20px auto;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  border: 2px solid #ddd;
+  background-color: white;
+}
+
+.list-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.list-table th,
+.list-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.list-table th {
+  background-color: #f2f2f2;
+}
+
+.doctor-new-doctor {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 10px;
+}
+
+.doctor-new-doctor select,
+.doctor-new-doctor input {
+  padding: 8px;
+  min-width: 300px;
+}
+
+.doctor-add-button {
+  padding: 10px 40px;
+  background-color: #4698eb;
+  color: white;
+  border: none;
+  cursor: pointer;
+  justify-self: end;
+}
+
+.doctor-new-doctor {
+  display: grid;
+  grid-template-columns: 1fr;
+  margin: 0px 0px;
+  grid-gap: 10px;
+}
+
+.doctor-appointment-div {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-gap: 30px;
+}
+
+.available-date-list-table {
+  width: 100%;
+  table-layout: fixed;
+}
+
+.available-date-list-table th,
+.available-date-list-table td {
+  padding: 8px;
+  border: 1px solid #ddd;
+  text-align: left;
+  word-wrap: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.available-date-list-table th:nth-child(1),
+.available-date-list-table td:nth-child(1),
+.available-date-list-table th:nth-child(2),
+.available-date-list-table td:nth-child(2) {
+  width: 100px;
+}
+
+.available-date-list-table th:nth-child(3),
+.available-date-list-table td:nth-child(3),
+.available-date-list-table th:nth-child(4),
+.available-date-list-table td:nth-child(4) {
+  width: 50px;
+}
+
+.doctor-search {
+  display: grid;
+  grid-template-columns: 5fr 1fr;
+}
+.available-add-button-div {
+  display: grid;
+}
+
+.show-dates-button {
+  padding: 5px 5px;
+  background-color: #4698eb;
+  color: white;
+  border: none;
+  cursor: pointer;
+  justify-self: end;
+}
+.available-date-add-button {
+  padding: 10px 40px;
+  background-color: #4698eb;
+  color: white;
+  border: none;
+  cursor: pointer;
+  justify-self: end;
+}
+
+.doctor-new-doctor {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 10px;
+}
+
+.doctor-update-doctor select,
+.doctor-update-doctor input {
+  padding: 8px;
+  min-width: 300px;
+}
+
+.doctor-update-button {
+  padding: 10px 40px;
+  background-color: #4698eb;
+  color: white;
+  border: none;
+  cursor: pointer;
+  justify-self: end;
+}
+
+.doctor-update-doctor {
+  display: grid;
+  grid-template-columns: 1fr;
+  margin: 0px 0px;
+  grid-gap: 10px;
+}

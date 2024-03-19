@@ -1,0 +1,97 @@
+.animal-container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 20px auto;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  border: 2px solid #ddd;
+  background-color: white;
+}
+
+.animal-list {
+  display: grid;
+  grid-gap: 20px;
+
+  padding: 20px;
+  width: 100%;
+  overflow-x: auto;
+}
+
+.animal-list-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.animal-list-table th,
+.animal-list-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.animal-list-table th {
+  background-color: #f2f2f2;
+}
+
+.animal-inputs {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 10px;
+  margin: 0px 30px;
+}
+
+.animal-inputs input {
+  padding: 5px;
+}
+
+.animal-inputs select {
+  padding: 5px;
+}
+.animal-add-button {
+  padding: 10px 40px;
+  background-color: #4698eb;
+  color: white;
+  border: none;
+  cursor: pointer;
+  justify-self: end;
+}
+
+.animal-update-inputs {
+  width: 500px;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 10px;
+  margin: 0px 30px;
+  justify-content: start;
+}
+
+.animal-update-inputs input {
+  padding: 5px;
+}
+
+.animal-update-inputs select {
+  padding: 5px;
+}
+.animal-update-div {
+  display: grid;
+  width: 700px;
+}
+
+.animal-search {
+  margin-bottom: 20px;
+}
+
+.animal-search input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.animal-search input[type="text"]:focus {
+  outline: none;
+  border-color: #007bff;
+}

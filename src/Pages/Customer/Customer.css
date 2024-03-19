@@ -1,0 +1,72 @@
+.customer-container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 20px auto;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  border: 2px solid #ddd;
+  background-color: white;
+}
+
+.customer-list-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.customer-list-table th,
+.customer-list-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.customer-list-table th {
+  background-color: #f2f2f2;
+}
+
+.customer-new-customer {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 10px;
+}
+
+.customer-new-customer select,
+.customer-new-customer input {
+  padding: 8px;
+  min-width: 300px;
+}
+
+.customer-add-button {
+  padding: 10px 40px;
+  background-color: #4698eb;
+  color: white;
+  border: none;
+  cursor: pointer;
+  justify-self: end;
+}
+
+.customer-new-customer {
+  display: grid;
+  grid-template-columns: 1fr;
+  margin: 0px 0px;
+  grid-gap: 10px;
+}
+
+.customer-search {
+  margin-bottom: 20px;
+}
+
+.customer-search input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.customer-search input[type="text"]:focus {
+  outline: none;
+  border-color: #007bff;
+}

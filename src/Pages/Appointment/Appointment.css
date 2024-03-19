@@ -1,0 +1,128 @@
+.appointment-container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 20px auto;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  border: 2px solid #ddd;
+  background-color: white;
+}
+
+.appointment-list {
+  padding: 20px;
+  width: 100%;
+  overflow-x: auto;
+}
+
+.appointment-list-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.appointment-list-table th,
+.appointment-list-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.appointment-list-table th {
+  background-color: #f2f2f2;
+}
+
+.appointment-add {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 10px;
+}
+
+.appointment-add select,
+.appointment-add input {
+  padding: 8px;
+  min-width: 300px;
+}
+
+.appointment-add-button {
+  padding: 10px 40px;
+  background-color: #4698eb;
+  color: white;
+  border: none;
+  cursor: pointer;
+  justify-self: end;
+}
+
+.appointment-add-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin: 20px 30px;
+  grid-gap: 20%;
+}
+
+.appointment-update-container {
+  width: 700px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin: 20px 30px;
+  grid-gap: 20%;
+}
+.appointment-update {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 10px;
+}
+.appointment-update-button {
+  padding: 10px 40px;
+  background-color: #4698eb;
+  color: white;
+  border: none;
+  cursor: pointer;
+  justify-self: end;
+}
+.appointment-update select,
+.appointment-update input {
+  padding: 15px;
+}
+.appointment-doctor-available-date-list {
+  display: grid;
+  justify-content: start;
+  grid-template-rows: auto 1fr;
+  grid-gap: 20px;
+}
+
+.appointment-doctor-available-date-list h3 {
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.appointment-doctor-available-date-list ul {
+  list-style-type: circle;
+  padding-left: 20px;
+}
+
+.appointment-doctor-available-date-list li {
+  margin-bottom: 5px;
+}
+
+.appointment-search {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.appointment-search input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.appointment-search input[type="text"] {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.appointment-search input[type="date"] {
+  width: 45%;
+}

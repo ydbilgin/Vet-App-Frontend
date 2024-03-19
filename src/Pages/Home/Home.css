@@ -1,0 +1,42 @@
+.home-page {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 10px;
+}
+
+.clinic-image {
+  display: grid;
+  justify-self: center;
+  width: 700px;
+}
+
+.image-container,
+.home-content {
+  margin-top: 100px;
+}
+
+.home-content {
+  display: grid;
+  align-self: center;
+}
+
+.image-container {
+  display: grid;
+  align-self: center;
+}
+
+.description {
+  font-family: Arial, sans-serif; /* Font ailesi */
+  font-size: 16px; /* Font boyutu */
+  line-height: 1.6; /* Satır yüksekliği */
+  letter-spacing: 0.05em; /* Harf aralığı */
+  margin: 0; /* Kenar boşluğu sıfır */
+  padding: 20px; /* İç boşluk */
+}
+
+.description p {
+  margin-bottom: 15px; /* Paragraf arası boşluk */
+}
+.welcome-title {
+  text-align: center;
+}
