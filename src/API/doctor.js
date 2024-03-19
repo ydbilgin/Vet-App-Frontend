@@ -2,21 +2,21 @@ import axios from "axios";
 
 export const getDoctors = async () => {
   const { data } = await axios.get(
-    import.meta.env.REACT_APP_BASE_URL + "/doctor/find-all"
+    import.meta.env.VITE_APP_BASE_URL + "/doctor/find-all"
   );
   return data;
 };
 
 export const deleteDoctor = async (id) => {
   const { data } = await axios.delete(
-    `${import.meta.env.REACT_APP_BASE_URL}/doctor/delete/${id}`
+    `${import.meta.env.VITE_APP_BASE_URL}/doctor/delete/${id}`
   );
   return data;
 };
 
 export const createDoctor = async (doctor) => {
   const { data } = await axios.post(
-    `${import.meta.env.REACT_APP_BASE_URL}/doctor/save`,
+    `${import.meta.env.VITE_APP_BASE_URL}/doctor/save`,
     doctor
   );
   return data;
@@ -24,7 +24,7 @@ export const createDoctor = async (doctor) => {
 
 export const updateDoctorFunction = async (doctor) => {
   const { data } = await axios.put(
-    `${import.meta.env.REACT_APP_BASE_URL}/doctor/update/${doctor.id}`,
+    `${import.meta.env.VITE_APP_BASE_URL}/doctor/update/${doctor.id}`,
     doctor
   );
   return data;
