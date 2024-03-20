@@ -291,6 +291,7 @@ function Vaccine() {
           name="name"
           value={newVaccine.name}
           onChange={handleNewVaccine}
+          required
         />
         <input
           type="text"
@@ -298,6 +299,7 @@ function Vaccine() {
           name="code"
           value={newVaccine.code}
           onChange={handleNewVaccine}
+          required
         />
         <input
           type="date"
@@ -305,6 +307,7 @@ function Vaccine() {
           name="protectionStartDate"
           value={newVaccine.protectionStartDate}
           onChange={handleNewVaccine}
+          required
         />
         <input
           type="date"
@@ -312,11 +315,13 @@ function Vaccine() {
           name="protectionFinishDate"
           value={newVaccine.protectionFinishDate}
           onChange={handleNewVaccine}
+          required
         />
         <select
           name="animalId"
           value={newVaccine.animal.id}
           onChange={handleNewVaccine}
+          required
         >
           <option value="" disabled>
             Hayvan
@@ -331,6 +336,7 @@ function Vaccine() {
           name="reportId"
           value={newVaccine.report.id}
           onChange={handleNewVaccine}
+          required
         >
           <option value="" disabled>
             Rapor

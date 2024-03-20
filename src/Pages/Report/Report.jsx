@@ -240,6 +240,7 @@ function Report() {
           name="title"
           value={newReport.title}
           onChange={handleNewReport}
+          required
         />
         <input
           type="text"
@@ -247,6 +248,7 @@ function Report() {
           name="diagnosis"
           value={newReport.diagnosis}
           onChange={handleNewReport}
+          required
         />
         <input
           type="number"
@@ -254,11 +256,13 @@ function Report() {
           name="price"
           value={newReport.price}
           onChange={handleNewReport}
+          required
         />
         <select
           name="appointmentId"
           value={newReport.appointment.id}
           onChange={handleNewReport}
+          required
         >
           <option value="" disabled>
             Randevu seçiniz
