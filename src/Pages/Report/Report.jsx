@@ -273,7 +273,11 @@ function Report() {
             </option>
           ))}
         </select>
-        <button className="report-add-button" onClick={handleCreate}>
+        <button
+          type="submit"
+          className="report-add-button"
+          onClick={handleCreate}
+        >
           Ekle
         </button>
       </div>
