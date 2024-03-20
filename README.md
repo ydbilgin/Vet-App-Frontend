@@ -12,7 +12,7 @@ PostgreSQL
 Axios
 Lombok
 
-## Kullanım Linki (FrontEnd)
+## Kullanım Linki
 
 https://vet-app-frontend-fawn.vercel.app/
 
