@@ -29,3 +29,8 @@ export const getCustomerById = async (id) => {
   const { data } = await axios.get(`${BASE_URL}/customer/${id}`);
   return data;
 };
+
+export const getCustomerByName = async (name) => {
+  const { data } = await axios.get(`${BASE_URL}/customer/name/${name}`);
+  return data;
+};

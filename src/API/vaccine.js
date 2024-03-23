@@ -24,3 +24,29 @@ export const updateVaccineFunction = async (vaccine) => {
   );
   return data;
 };
+
+export const getVaccineBetweenTwoDates = async (startDate, endDate) => {
+  const { data } = await axios.get(
+    `${BASE_URL}/vaccine/expiring/${startDate}/${endDate}`
+  );
+  return data;
+};
+
+export const getVaccineBeforeDate = async (endDate) => {
+  const { data } = await axios.get(
+    `${BASE_URL}/vaccine/expiring-before/${endDate}`
+  );
+  return data;
+};
+
+export const getVaccineAfterDate = async (startDate) => {
+  const { data } = await axios.get(
+    `${BASE_URL}/vaccine/expiring-after/${startDate}`
+  );
+  return data;
+};
+
+export const getVaccineByAnimal = async (name) => {
+  const { data } = await axios.get(`${BASE_URL}/vaccine/animal-name/${name}`);
+  return data;
+};

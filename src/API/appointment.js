@@ -27,3 +27,33 @@ export const updateAppointmentFunction = async (appointment) => {
   );
   return data;
 };
+
+export const getAppointmentBetweenTwoDates = async (startDate, endDate) => {
+  const { data } = await axios.get(
+    `${BASE_URL}/appointment/expiring/${encodeURIComponent(
+      startDate
+    )}/${encodeURIComponent(endDate)}`
+  );
+  return data;
+};
+
+export const getAppointmentBeforeDate = async (endDate) => {
+  const { data } = await axios.get(
+    `${BASE_URL}/appointment/expiring-before/${encodeURIComponent(endDate)}`
+  );
+  return data;
+};
+
+export const getAppointmentAfterDate = async (startDate) => {
+  const { data } = await axios.get(
+    `${BASE_URL}/appointment/expiring-after/${encodeURIComponent(startDate)}`
+  );
+  return data;
+};
+
+export const getAppointmentByDoctor = async (name) => {
+  const { data } = await axios.get(
+    `${BASE_URL}/appointment/doctor-name/${name}`
+  );
+  return data;
+};

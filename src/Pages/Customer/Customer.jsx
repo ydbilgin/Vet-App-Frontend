@@ -4,6 +4,7 @@ import {
   getCustomers,
   createCustomer,
   updateCustomerFunction,
+  getCustomerByName,
 } from "../../API/customer";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
@@ -25,16 +26,6 @@ function Customer() {
     setIsModalOpen(false);
   };
 
-  const filterCustomers = (customer) => {
-    return (
-      customer.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      customer.mail.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      customer.address.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      customer.city.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      customer.phone.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-  };
-  const filteredCustomers = customer.filter(filterCustomers);
   const [newCustomer, setNewCustomer] = useState({
     name: "",
     mail: "",
@@ -49,6 +40,7 @@ function Customer() {
     city: "",
     phone: "",
   });
+
   useEffect(() => {
     getCustomers()
       .then((data) => {
@@ -61,14 +53,38 @@ function Customer() {
     setReload(false);
   }, [reload]);
 
+  useEffect(() => {
+    if (searchTerm.trim() !== "") {
+      getCustomerByName(searchTerm)
+        .then((data) => {
+          setCustomer(data);
+        })
+        .catch((error) => {
+          setError(error.response.data);
+          setShowModal(true);
+          setCustomer([]);
+        });
+    } else {
+      getCustomers()
+        .then((data) => {
+          setCustomer(data);
+        })
+        .catch((error) => {
+          setError(error.response.data);
+          setShowModal(true);
+          setCustomer([]);
+        });
+    }
+  }, [searchTerm]);
+
   const handleDelete = (id) => {
     deleteCustomer(id)
       .then(() => {
         setReload(true);
       })
       .catch((error) => {
-        setError(error.response.data); // Backendden gelen hatayı al
-        setShowModal(true); // Modal popup'u göster
+        setError(error.response.data);
+        setShowModal(true);
       });
   };
 
@@ -175,7 +191,7 @@ function Customer() {
             </tr>
           </thead>
           <tbody>
-            {filteredCustomers.map((customer) => (
+            {customer.map((customer) => (
               <tr key={customer.id}>
                 <td>{customer.name}</td>
                 <td>{customer.mail}</td>

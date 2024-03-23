@@ -5,6 +5,10 @@ import {
   getAppointments,
   createAppointment,
   updateAppointmentFunction,
+  getAppointmentAfterDate,
+  getAppointmentBeforeDate,
+  getAppointmentBetweenTwoDates,
+  getAppointmentByDoctor,
 } from "../../API/appointment";
 import { getAvailableDatesByDoctorId } from "../../API/available-date";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -16,15 +20,15 @@ import Modal from "../../Components/Modal.jsx";
 const Appointment = () => {
   const [error, setError] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const [appointments, setAppointments] = useState([]);
   const [reload, setReload] = useState(true);
   const [animals, setAnimals] = useState([]);
   const [doctors, setDoctors] = useState([]);
   const [availableDates, setAvailableDates] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [searchDate, setSearchDate] = useState("");
-  const [searchStartDate, setSearchStartDate] = useState("");
-  const [searchEndDate, setSearchEndDate] = useState("");
+  const [results, setResults] = useState([]);
+  const [doctorSearchTerm, setDoctorSearchTerm] = useState("");
+  const [startSearchTerm, setStartSearchTerm] = useState("");
+  const [endSearchTerm, setEndSearchTerm] = useState("");
+
   const [isAppointmentEditModalOpen, setIsAppointmentEditModalOpen] =
     useState(false);
   const handleOpenModal = () => {
@@ -50,22 +54,6 @@ const Appointment = () => {
     setAvailableDates([]); // Doktorun müsait günlerini sıfırla
   };
 
-  const filterAppointments = (appointment) => {
-    const startDateMatch =
-      !searchStartDate ||
-      new Date(appointment.appointmentDate) >= new Date(searchStartDate);
-    const endDateMatch =
-      !searchEndDate ||
-      new Date(appointment.appointmentDate) <= new Date(searchEndDate);
-    const termMatch =
-      !searchTerm ||
-      appointment.animal.name
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase()) ||
-      appointment.doctor.name.toLowerCase().includes(searchTerm.toLowerCase());
-    return startDateMatch && endDateMatch && termMatch;
-  };
-  const filteredAppointments = appointments.filter(filterAppointments);
   const [newAppointment, setNewAppointment] = useState({
     appointmentDate: "",
     animal: {
@@ -88,15 +76,66 @@ const Appointment = () => {
   useEffect(() => {
     Promise.all([getAppointments(), getAnimals(), getDoctors()])
       .then(([appointmentsData, animalsData, doctorsData]) => {
-        setAppointments(appointmentsData);
+        setResults(appointmentsData);
         setAnimals(animalsData);
         setDoctors(doctorsData);
       })
       .catch((error) => {
-        console.error("Error fetching data:", error);
+        setError(error.response.data); // Backendden gelen hatayı al
+        setShowModal(true); // Modal popup'u göster
       });
     setReload(false);
   }, [reload]);
+
+  useEffect(() => {
+    const fetchResults = async () => {
+      try {
+        let results = [];
+        if (doctorSearchTerm.trim() !== "") {
+          const byDoctor = await getAppointmentByDoctor(doctorSearchTerm);
+          results = [...results, ...byDoctor];
+        }
+        if (startSearchTerm.trim() !== "" && endSearchTerm.trim() !== "") {
+          const tempDateStart = new Date(startSearchTerm)
+            .toISOString()
+            .slice(0, 16);
+          const tempDateEnd = new Date(endSearchTerm)
+            .toISOString()
+            .slice(0, 16);
+
+          const betweenTwoDates = await getAppointmentBetweenTwoDates(
+            tempDateStart,
+            tempDateEnd
+          );
+          results = betweenTwoDates;
+        } else if (startSearchTerm.trim() !== "") {
+          const tempDate = new Date(startSearchTerm).toISOString().slice(0, 16);
+          const startDates = await getAppointmentAfterDate(tempDate);
+          results = startDates;
+        } else if (endSearchTerm.trim() !== "") {
+          const tempDate = new Date(endSearchTerm).toISOString().slice(0, 16);
+
+          const endDates = await getAppointmentBeforeDate(tempDate);
+
+          results = endDates;
+        } else if (
+          doctorSearchTerm.trim() === "" &&
+          startSearchTerm.trim() === "" &&
+          endSearchTerm === ""
+        ) {
+          const data = await getAppointments();
+          setResults(data);
+          return;
+        }
+        setResults(results);
+      } catch (error) {
+        console.error(error);
+        setResults([]);
+      }
+    };
+    console.log(results);
+    fetchResults();
+  }, [doctorSearchTerm, startSearchTerm, endSearchTerm]);
 
   const handleDelete = (id) => {
     console.log(id);
@@ -258,19 +297,27 @@ const Appointment = () => {
         <div className="appointment-search">
           <input
             type="text"
-            placeholder="Hayvan veya Doktor ismi"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="Doktor ismi"
+            value={doctorSearchTerm}
+            onChange={(e) => setDoctorSearchTerm(e.target.value)}
           />
           <input
-            type="date"
-            value={searchStartDate}
-            onChange={(e) => setSearchStartDate(e.target.value)}
+            type="datetime-local"
+            value={
+              startSearchTerm
+                ? new Date(startSearchTerm).toISOString().slice(0, 16)
+                : ""
+            }
+            onChange={(e) => setStartSearchTerm(e.target.value)}
           />
           <input
-            type="date"
-            value={searchEndDate}
-            onChange={(e) => setSearchEndDate(e.target.value)}
+            type="datetime-local"
+            value={
+              endSearchTerm
+                ? new Date(endSearchTerm).toISOString().slice(0, 16)
+                : ""
+            }
+            onChange={(e) => setEndSearchTerm(e.target.value)}
           />
         </div>
       </div>
@@ -288,7 +335,7 @@ const Appointment = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredAppointments.map((appointment) => (
+            {results.map((appointment) => (
               <tr key={appointment.id}>
                 <td>{appointment.appointmentDate}</td>
                 <td>{appointment.doctor.name}</td>

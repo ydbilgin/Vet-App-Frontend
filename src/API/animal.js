@@ -24,3 +24,23 @@ export const updateAnimalFunction = async (animal) => {
   );
   return data;
 };
+
+export const getAnimalByName = async (name) => {
+  const { data } = await axios.get(`${BASE_URL}/animal/name/${name}`);
+  return data;
+};
+
+export const getAnimalByCustomerName = async (name) => {
+  const { data } = await axios.get(`${BASE_URL}/animal/customer-name/${name}`);
+  return data;
+};
+
+export const getAnimalByNameAndCustomerName = async (
+  animalName,
+  customerName
+) => {
+  const { data } = await axios.get(
+    `${BASE_URL}/animal/customer-animal/${animalName}-${customerName}`
+  );
+  return data;
+};

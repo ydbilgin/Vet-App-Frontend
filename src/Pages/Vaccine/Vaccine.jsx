@@ -4,6 +4,10 @@ import {
   deleteVaccine,
   createVaccine,
   updateVaccineFunction,
+  getVaccineBetweenTwoDates,
+  getVaccineBeforeDate,
+  getVaccineAfterDate,
+  getVaccineByAnimal,
 } from "../../API/vaccine";
 import { getReports } from "../../API/report";
 import "./Vaccine.css";
@@ -15,25 +19,13 @@ import Modal from "../../Components/Modal.jsx";
 function Vaccine() {
   const [error, setError] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const [vaccine, setVaccine] = useState([]);
   const [reload, setReload] = useState(true);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [searchStartDate, setSearchStartDate] = useState("");
-  const [searchEndDate, setSearchEndDate] = useState("");
   const [isVaccineEditModalOpen, setIsVaccineEditModalOpen] = useState(false);
-  const filterVaccine = (vaccine) => {
-    const startDateMatch =
-      !searchStartDate ||
-      new Date(vaccine.protectionStartDate) >= new Date(searchStartDate);
-    const endDateMatch =
-      !searchEndDate ||
-      new Date(vaccine.protectionFinishDate) <= new Date(searchEndDate);
-    const nameMatch = vaccine.name
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase());
-    return startDateMatch && endDateMatch && nameMatch;
-  };
-  const filteredVaccine = vaccine.filter(filterVaccine);
+  const [results, setResults] = useState([]);
+  const [animalSearchTerm, setAnimalSearchTerm] = useState("");
+  const [startSearchTerm, setStartSearchTerm] = useState("");
+  const [endSearchTerm, setEndSearchTerm] = useState("");
+
   const handleOpenModal = () => {
     setIsModalOpen(true);
   };
@@ -72,15 +64,48 @@ function Vaccine() {
   useEffect(() => {
     Promise.all([getVaccines(), getAnimals(), getReports()])
       .then(([vaccinesData, animalsData, reportsData]) => {
-        setVaccine(vaccinesData);
+        setResults(vaccinesData);
         setAnimal(animalsData);
         setReport(reportsData);
       })
       .catch((error) => {
-        console.error("Error fetching data:", error);
+        setError(error.response.data); // Backendden gelen hatayı al
+        setShowModal(true); // Modal popup'u göster
       });
     setReload(false);
   }, [reload]);
+
+  useEffect(() => {
+    const fetchResults = async () => {
+      try {
+        let results = [];
+        if (animalSearchTerm.trim() !== "") {
+          const byAnimal = await getVaccineByAnimal(animalSearchTerm);
+          results = [...results, ...byAnimal];
+        }
+        if (startSearchTerm.trim() !== "" && endSearchTerm.trim() !== "") {
+          const betweenTwoDates = await getVaccineBetweenTwoDates(
+            startSearchTerm,
+            endSearchTerm
+          );
+          results = betweenTwoDates;
+        } else if (startSearchTerm.trim() !== "") {
+          const startDates = await getVaccineAfterDate(startSearchTerm);
+          results = startDates;
+        } else if (endSearchTerm.trim() !== "") {
+          const endDates = await getVaccineBeforeDate(endSearchTerm);
+          results = endDates;
+        } else {
+          results = await getVaccines();
+        }
+        setResults(results);
+      } catch (error) {
+        console.error(error);
+        setResults([]);
+      }
+    };
+    fetchResults();
+  }, [animalSearchTerm, startSearchTerm, endSearchTerm]);
 
   const handleDelete = (id) => {
     console.log(id);
@@ -225,22 +250,22 @@ function Vaccine() {
           <input
             type="text"
             placeholder="Ara"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            value={animalSearchTerm}
+            onChange={(e) => setAnimalSearchTerm(e.target.value)}
           />
           <label htmlFor="">Başlangıç Tarihi:</label>
           <input
             type="date"
             placeholder="Start Date"
-            value={searchStartDate}
-            onChange={(e) => setSearchStartDate(e.target.value)}
+            value={startSearchTerm}
+            onChange={(e) => setStartSearchTerm(e.target.value)}
           />
           <label htmlFor="">Bitiş Tarihi:</label>
           <input
             type="date"
             placeholder="End Date"
-            value={searchEndDate}
-            onChange={(e) => setSearchEndDate(e.target.value)}
+            value={endSearchTerm}
+            onChange={(e) => setEndSearchTerm(e.target.value)}
           />
         </div>
       </div>
@@ -260,7 +285,7 @@ function Vaccine() {
             </tr>
           </thead>
           <tbody>
-            {filteredVaccine.map((vaccine) => (
+            {results.map((vaccine) => (
               <tr key={vaccine.id}>
                 <td>{vaccine.name}</td>
                 <td>{vaccine.code}</td>

@@ -4,6 +4,9 @@ import {
   getAnimals,
   createAnimal,
   updateAnimalFunction,
+  getAnimalByName,
+  getAnimalByCustomerName,
+  getAnimalByNameAndCustomerName,
 } from "../../API/animal";
 import { getCustomers } from "../../API/customer";
 import Modal from "../../Components/Modal.jsx";
@@ -21,6 +24,9 @@ function Animal() {
   const [showModal, setShowModal] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAnimalEditModalOpen, setIsAnimalEditModalOpen] = useState(false);
+  const [animalSearchTerm, setAnimalSearchTerm] = useState("");
+  const [customerSearchTerm, setCustomerSearchTerm] = useState("");
+  const [results, setResults] = useState([]);
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -56,7 +62,7 @@ function Animal() {
   useEffect(() => {
     Promise.all([getAnimals(), getCustomers()])
       .then(([animalsData, customersData]) => {
-        setAnimal(animalsData);
+        setResults(animalsData);
         setCustomer(customersData);
       })
       .catch((error) => {
@@ -65,6 +71,38 @@ function Animal() {
       });
     setReload(false);
   }, [reload]);
+  useEffect(() => {
+    const fetchResults = async () => {
+      try {
+        let results = [];
+
+        if (
+          animalSearchTerm.trim() !== "" &&
+          customerSearchTerm.trim() !== ""
+        ) {
+          const animalsAndCustomers = await getAnimalByNameAndCustomerName(
+            animalSearchTerm,
+            customerSearchTerm
+          );
+          results = [...results, ...animalsAndCustomers];
+        } else if (animalSearchTerm.trim() !== "") {
+          const animals = await getAnimalByName(animalSearchTerm);
+          results = [...results, ...animals];
+        } else if (customerSearchTerm.trim() !== "") {
+          const customers = await getAnimalByCustomerName(customerSearchTerm);
+          results = [...results, ...customers];
+        } else {
+          results = await getAnimals();
+        }
+
+        setResults(results);
+      } catch (error) {
+        console.error(error);
+        setResults([]);
+      }
+    };
+    fetchResults();
+  }, [reload, animalSearchTerm, customerSearchTerm]);
 
   const handleDelete = (id) => {
     deleteAnimal(id)
@@ -133,6 +171,7 @@ function Animal() {
     });
     setIsAnimalEditModalOpen(true);
   };
+
   const handleUpdateChange = (event) => {
     setUpdateAnimal({
       ...updateAnimal,
@@ -186,9 +225,15 @@ function Animal() {
         <div className="animal-search">
           <input
             type="text"
-            placeholder="Hayvan ya da doktor ara"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="Hayvan ara"
+            value={animalSearchTerm}
+            onChange={(e) => setAnimalSearchTerm(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Müşteri ara"
+            value={customerSearchTerm}
+            onChange={(e) => setCustomerSearchTerm(e.target.value)}
           />
         </div>
       </div>
@@ -210,39 +255,27 @@ function Animal() {
             </tr>
           </thead>
           <tbody>
-            {animal
-              .filter(
-                (item) =>
-                  item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                  item.customer.name
-                    .toLowerCase()
-                    .includes(searchTerm.toLowerCase())
-              )
-              .map((filteredAnimal) => (
-                <tr key={filteredAnimal.id}>
-                  <td>{filteredAnimal.name}</td>
-                  <td>{filteredAnimal.species}</td>
-                  <td>{filteredAnimal.breed}</td>
-                  <td>{filteredAnimal.gender}</td>
-                  <td>{filteredAnimal.colour}</td>
-                  <td>{filteredAnimal.dateOfBirth}</td>
-                  <td>{filteredAnimal.customer.name}</td>
-                  <td>
-                    <span>
-                      <DeleteIcon
-                        onClick={() => handleDelete(filteredAnimal.id)}
-                      />
-                    </span>
-                  </td>
-                  <td>
-                    <span>
-                      <EditIcon
-                        onClick={() => handleUpdateBtn(filteredAnimal)}
-                      />
-                    </span>
-                  </td>
-                </tr>
-              ))}
+            {results.map((animal) => (
+              <tr key={animal.id}>
+                <td>{animal.name}</td>
+                <td>{animal.species}</td>
+                <td>{animal.breed}</td>
+                <td>{animal.gender}</td>
+                <td>{animal.colour}</td>
+                <td>{animal.dateOfBirth}</td>
+                <td>{animal.customer.name}</td>
+                <td>
+                  <span>
+                    <DeleteIcon onClick={() => handleDelete(animal.id)} />
+                  </span>
+                </td>
+                <td>
+                  <span>
+                    <EditIcon onClick={() => handleUpdateBtn(animal)} />
+                  </span>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
