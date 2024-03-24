@@ -104,6 +104,7 @@ function Vaccine() {
               animalSearchTerm
             );
             results = startAndAnimal;
+            console.log(results);
           } else if (endTrim !== "") {
             console.log("animal boş değilse end boş değilse");
 
@@ -112,6 +113,7 @@ function Vaccine() {
               animalSearchTerm
             );
             results = endAndAnimal;
+            console.log(results);
           } else if (startTrim !== "" && endTrim !== "") {
             console.log("animal boş değilse start-end boş değilse ");
 
@@ -122,9 +124,11 @@ function Vaccine() {
                 animalSearchTerm
               );
             results = betweenTwoDatesWithAnimal;
+            console.log(results);
           }
           const byAnimal = await getVaccineByAnimal(animalSearchTerm);
           results = [...results, ...byAnimal];
+          console.log(results);
         } else {
           console.log("animal boşsa");
 
@@ -138,16 +142,19 @@ function Vaccine() {
                 animalSearchTerm
               );
             results = [...results, ...betweenTwoDatesWithAnimal];
+            console.log(results);
           } else if (startTrim !== "") {
             console.log("animal boşsa start boş değilse");
 
             const startDates = await getVaccineAfterDate(startSearchTerm);
             results = [...results, ...startDates];
+            console.log(results);
           } else if (endTrim !== "") {
             console.log("animal boşsa end boş değilse");
 
             const endDates = await getVaccineBeforeDate(endSearchTerm);
             results = [...results, ...endDates];
+            console.log(results);
           }
         }
         results = results.filter(
@@ -156,6 +163,7 @@ function Vaccine() {
         );
 
         setResults(results);
+        console.log(results);
       } catch (error) {
         console.error(error);
         setResults([]);
