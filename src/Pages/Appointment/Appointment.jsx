@@ -28,6 +28,21 @@ const Appointment = () => {
   const [doctorSearchTerm, setDoctorSearchTerm] = useState("");
   const [startSearchTerm, setStartSearchTerm] = useState("");
   const [endSearchTerm, setEndSearchTerm] = useState("");
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    if (name === "startSearchTerm" || name === "endSearchTerm") {
+      const localDate = new Date(value);
+      localDate.setHours(localDate.getHours() + 3);
+      const isoDate = localDate.toISOString().slice(0, 16);
+      if (name === "startSearchTerm") {
+        setStartSearchTerm(isoDate);
+      } else {
+        setEndSearchTerm(isoDate);
+      }
+    } else {
+      setDoctorSearchTerm(value);
+    }
+  };
 
   const [isAppointmentEditModalOpen, setIsAppointmentEditModalOpen] =
     useState(false);
@@ -96,26 +111,32 @@ const Appointment = () => {
           results = [...results, ...byDoctor];
         }
         if (startSearchTerm.trim() !== "" && endSearchTerm.trim() !== "") {
-          const tempDateStart = new Date(startSearchTerm)
-            .toISOString()
-            .slice(0, 16);
-          const tempDateEnd = new Date(endSearchTerm)
-            .toISOString()
-            .slice(0, 16);
+          let tempDateStart = new Date(startSearchTerm);
+          let tempDateEnd = new Date(endSearchTerm);
+          tempDateStart.setHours(tempDateStart.getHours() + 3);
+          tempDateEnd.setHours(tempDateEnd.getHours() + 3);
+          const startDate = tempDateStart.toISOString().slice(0, 16);
+          const endDate = tempDateEnd.toISOString().slice(0, 16);
 
           const betweenTwoDates = await getAppointmentBetweenTwoDates(
-            tempDateStart,
-            tempDateEnd
+            startDate,
+            endDate
           );
           results = betweenTwoDates;
         } else if (startSearchTerm.trim() !== "") {
-          const tempDate = new Date(startSearchTerm).toISOString().slice(0, 16);
-          const startDates = await getAppointmentAfterDate(tempDate);
+          let tempDate = new Date(startSearchTerm);
+          tempDate.setHours(tempDate.getHours() + 3);
+          const startDates = await getAppointmentAfterDate(
+            tempDate.toISOString().slice(0, 16)
+          );
           results = startDates;
         } else if (endSearchTerm.trim() !== "") {
-          const tempDate = new Date(endSearchTerm).toISOString().slice(0, 16);
+          let tempDate = new Date(endSearchTerm);
+          tempDate.setHours(tempDate.getHours() + 3);
 
-          const endDates = await getAppointmentBeforeDate(tempDate);
+          const endDates = await getAppointmentBeforeDate(
+            tempDate.toISOString().slice(0, 16)
+          );
 
           results = endDates;
         } else if (
@@ -133,7 +154,6 @@ const Appointment = () => {
         setResults([]);
       }
     };
-    console.log(results);
     fetchResults();
   }, [doctorSearchTerm, startSearchTerm, endSearchTerm]);
 
@@ -303,21 +323,15 @@ const Appointment = () => {
           />
           <input
             type="datetime-local"
-            value={
-              startSearchTerm
-                ? new Date(startSearchTerm).toISOString().slice(0, 16)
-                : ""
-            }
-            onChange={(e) => setStartSearchTerm(e.target.value)}
+            value={startSearchTerm}
+            onChange={handleInputChange}
+            name="startSearchTerm"
           />
           <input
             type="datetime-local"
-            value={
-              endSearchTerm
-                ? new Date(endSearchTerm).toISOString().slice(0, 16)
-                : ""
-            }
-            onChange={(e) => setEndSearchTerm(e.target.value)}
+            value={endSearchTerm}
+            onChange={handleInputChange}
+            name="endSearchTerm"
           />
         </div>
       </div>

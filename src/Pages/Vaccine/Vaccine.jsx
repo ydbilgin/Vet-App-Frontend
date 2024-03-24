@@ -95,8 +95,14 @@ function Vaccine() {
         } else if (endSearchTerm.trim() !== "") {
           const endDates = await getVaccineBeforeDate(endSearchTerm);
           results = endDates;
-        } else {
-          results = await getVaccines();
+        } else if (
+          animalSearchTerm.trim() === "" &&
+          startSearchTerm.trim() === "" &&
+          endSearchTerm.trim() === ""
+        ) {
+          const data = await getVaccines();
+          setResults(data);
+          return;
         }
         setResults(results);
       } catch (error) {
