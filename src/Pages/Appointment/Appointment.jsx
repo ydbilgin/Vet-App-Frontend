@@ -175,10 +175,12 @@ const Appointment = () => {
         setResults([]);
 
         if (doctorTrim !== "") {
+          console.log("doktor dolu");
           const byDoctor = await getAppointmentByDoctor(doctorSearchTerm);
           results = [];
           results = [...results, ...byDoctor];
           if (startTrim !== "" && endTrim === "") {
+            console.log("doktor dolu start dolu end boş");
             let tempDateStart = new Date(startSearchTerm);
             tempDateStart.setHours(tempDateStart.getHours() + 3);
             const startDate = tempDateStart.toISOString().slice(0, 16);
@@ -193,6 +195,7 @@ const Appointment = () => {
             results = [];
             results = startAndDoctor;
           } else if (endTrim !== "" && startTrim === "") {
+            console.log("doktor dolu end dolu start boş ");
             let tempDateEnd = new Date(endSearchTerm);
             tempDateEnd.setHours(tempDateEnd.getHours() + 3);
             const endDate = tempDateEnd.toISOString().slice(0, 16);
@@ -206,6 +209,7 @@ const Appointment = () => {
             results = [];
             results = endAndDoctor;
           } else if (startTrim !== "" && endTrim !== "") {
+            console.log("doktor dolu end dolu start dolu ");
             let tempDateStart = new Date(startSearchTerm);
             tempDateStart.setHours(tempDateStart.getHours() + 3);
             const startDate = tempDateStart.toISOString().slice(0, 16);
