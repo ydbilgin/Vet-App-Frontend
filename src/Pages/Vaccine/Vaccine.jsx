@@ -87,6 +87,7 @@ function Vaccine() {
         const endTrim = endSearchTerm.trim();
 
         if (animalTrim === "" && startTrim === "" && endTrim === "") {
+          console.log("hepsi boşsa");
           const data = await getVaccines();
           setResults(data);
           return;
@@ -95,19 +96,25 @@ function Vaccine() {
         setResults([]);
 
         if (animalTrim !== "") {
+          console.log("animal boş değilse");
           if (startTrim !== "") {
+            console.log("animal boş değilse start boş değilse");
             const startAndAnimal = await getVaccineAfterDateWithAnimal(
               startSearchTerm,
               animalSearchTerm
             );
             results = startAndAnimal;
           } else if (endTrim !== "") {
+            console.log("animal boş değilse end boş değilse");
+
             const endAndAnimal = await getVaccineBeforeDateWithAnimal(
               endSearchTerm,
               animalSearchTerm
             );
             results = endAndAnimal;
           } else if (startTrim !== "" && endTrim !== "") {
+            console.log("animal boş değilse start-end boş değilse ");
+
             const betweenTwoDatesWithAnimal =
               await getVaccineBetweenTwoDatesWithAnimal(
                 startSearchTerm,
@@ -119,7 +126,11 @@ function Vaccine() {
           const byAnimal = await getVaccineByAnimal(animalSearchTerm);
           results = [...results, ...byAnimal];
         } else {
+          console.log("animal boşsa");
+
           if (startTrim !== "" && endTrim !== "") {
+            console.log("animal boşsa start-end boş değilse");
+
             const betweenTwoDatesWithAnimal =
               await getVaccineBetweenTwoDatesWithAnimal(
                 startSearchTerm,
@@ -128,9 +139,13 @@ function Vaccine() {
               );
             results = [...results, ...betweenTwoDatesWithAnimal];
           } else if (startTrim !== "") {
+            console.log("animal boşsa start boş değilse");
+
             const startDates = await getVaccineAfterDate(startSearchTerm);
             results = [...results, ...startDates];
           } else if (endTrim !== "") {
+            console.log("animal boşsa end boş değilse");
+
             const endDates = await getVaccineBeforeDate(endSearchTerm);
             results = [...results, ...endDates];
           }
