@@ -150,6 +150,7 @@ const Appointment = () => {
 
             console.log(startSearchTerm);
             console.log(endSearchTerm);
+            console.log(doctorSearchTerm);
             const betweenTwoDatesWithDoctor =
               await getAppointmentBetweenTwoDatesWithDoctor(
                 startSearchTerm,
