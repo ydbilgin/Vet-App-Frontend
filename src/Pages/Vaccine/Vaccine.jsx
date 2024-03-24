@@ -135,12 +135,10 @@ function Vaccine() {
           if (startTrim !== "" && endTrim !== "") {
             console.log("animal boşsa start-end boş değilse");
 
-            const betweenTwoDatesWithAnimal =
-              await getVaccineBetweenTwoDatesWithAnimal(
-                startSearchTerm,
-                endSearchTerm,
-                animalSearchTerm
-              );
+            const betweenTwoDatesWithAnimal = await getVaccineBetweenTwoDates(
+              startSearchTerm,
+              endSearchTerm
+            );
             results = [...results, ...betweenTwoDatesWithAnimal];
             console.log(results);
           } else if (startTrim !== "" && endTrim === "") {
