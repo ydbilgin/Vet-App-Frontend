@@ -127,17 +127,15 @@ const Appointment = () => {
           results = [...results, ...byDoctor];
           if (startTrim !== "" && endTrim === "") {
             console.log("doktor dolu start dolu end boş");
-            let tempDateStart = new Date(startSearchTerm);
-            tempDateStart.setHours(tempDateStart.getHours() + 3);
-            const startDate = tempDateStart.toISOString().slice(0, 16);
+
             console.log(startSearchTerm);
-            console.log(tempDateStart);
-            console.log(startDate);
 
             const startAndDoctor = await getAppointmentAfterDateWithDoctor(
-              startDate,
+              startSearchTerm,
               doctorSearchTerm
             );
+            console.log(startSearchTerm);
+
             results = [];
             results = startAndDoctor;
           } else if (endTrim !== "" && startTrim === "") {
@@ -149,7 +147,7 @@ const Appointment = () => {
             console.log(tempDateEnd);
             console.log(endDate);
             const endAndDoctor = await getAppointmentBeforeDateWithDoctor(
-              endDate,
+              endSearchTerm,
               doctorSearchTerm
             );
             results = [];
