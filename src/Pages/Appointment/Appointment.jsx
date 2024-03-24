@@ -121,26 +121,53 @@ const Appointment = () => {
         setResults([]);
 
         if (doctorTrim !== "") {
-          console.log("doktor dolu");
           const byDoctor = await getAppointmentByDoctor(doctorSearchTerm);
+          results = [];
           results = [...results, ...byDoctor];
-        }
-
-        if (startTrim !== "" && endTrim !== "") {
-          console.log("start ve end dolu");
-          const betweenTwoDates = await getAppointmentBetweenTwoDates(
-            startSearchTerm,
-            endSearchTerm
-          );
-          results = [...results, ...betweenTwoDates];
-        } else if (startTrim !== "" && endTrim === "") {
-          console.log("start dolu end boş");
-          const startDates = await getAppointmentAfterDate(startSearchTerm);
-          results = [...results, ...startDates];
-        } else if (endTrim !== "" && startTrim === "") {
-          console.log("end dolu start boş");
-          const endDates = await getAppointmentBeforeDate(endSearchTerm);
-          results = [...results, ...endDates];
+          if (startTrim !== "" && endTrim === "") {
+            console.log("doktor dolu start dolu end boş");
+            console.log(startSearchTerm);
+            const startAndDoctor = await getAppointmentAfterDateWithDoctor(
+              startSearchTerm,
+              doctorSearchTerm
+            );
+            results = [];
+            results = startAndDoctor;
+          } else if (endTrim !== "" && startTrim === "") {
+            const endAndDoctor = await getAppointmentBeforeDateWithDoctor(
+              endSearchTerm,
+              doctorSearchTerm
+            );
+            results = [];
+            results = endAndDoctor;
+          } else if (startTrim !== "" && endTrim !== "") {
+            const betweenTwoDatesWithDoctor =
+              await getAppointmentBetweenTwoDatesWithDoctor(
+                startSearchTerm,
+                endSearchTerm,
+                doctorSearchTerm
+              );
+            results = [];
+            results = betweenTwoDatesWithDoctor;
+          }
+        } else {
+          if (startTrim !== "" && endTrim !== "") {
+            const betweenTwoDatesWithDoctor =
+              await getAppointmentBetweenTwoDates(
+                startSearchTerm,
+                endSearchTerm
+              );
+            results = [];
+            results = [...results, ...betweenTwoDatesWithDoctor];
+          } else if (startTrim !== "" && endTrim === "") {
+            const startDates = await getAppointmentAfterDate(startSearchTerm);
+            results = [];
+            results = [...results, ...startDates];
+          } else if (endTrim !== "" && startTrim === "") {
+            const endDates = await getAppointmentBeforeDate(endSearchTerm);
+            results = [];
+            results = [...results, ...endDates];
+          }
         }
 
         setResults(results);
