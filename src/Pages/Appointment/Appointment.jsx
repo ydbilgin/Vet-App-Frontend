@@ -134,15 +134,10 @@ const Appointment = () => {
               startSearchTerm,
               doctorSearchTerm
             );
-            console.log(startSearchTerm);
-
             results = [];
             results = startAndDoctor;
           } else if (endTrim !== "" && startTrim === "") {
             console.log("doktor dolu end dolu start boş ");
-            let tempDateEnd = new Date(endSearchTerm);
-            tempDateEnd.setHours(tempDateEnd.getHours() + 3);
-            const endDate = tempDateEnd.toISOString().slice(0, 16);
             console.log(endSearchTerm);
             console.log(tempDateEnd);
             console.log(endDate);
@@ -154,23 +149,13 @@ const Appointment = () => {
             results = endAndDoctor;
           } else if (startTrim !== "" && endTrim !== "") {
             console.log("doktor dolu end dolu start dolu ");
-            let tempDateStart = new Date(startSearchTerm);
-            tempDateStart.setHours(tempDateStart.getHours() + 3);
-            const startDate = tempDateStart.toISOString().slice(0, 16);
-            let tempDateEnd = new Date(endSearchTerm);
-            tempDateEnd.setHours(tempDateEnd.getHours() + 3);
-            const endDate = tempDateEnd.toISOString().slice(0, 16);
 
             console.log(startSearchTerm);
-            console.log(tempDateStart);
-            console.log(startDate);
             console.log(endSearchTerm);
-            console.log(tempDateEnd);
-            console.log(endDate);
             const betweenTwoDatesWithDoctor =
               await getAppointmentBetweenTwoDatesWithDoctor(
-                startDate,
-                endDate,
+                startSearchTerm,
+                endSearchTerm,
                 doctorSearchTerm
               );
             results = [];
@@ -178,28 +163,19 @@ const Appointment = () => {
           }
         } else {
           if (startTrim !== "" && endTrim !== "") {
-            let tempDateStart = new Date(startSearchTerm);
-            tempDateStart.setHours(tempDateStart.getHours() + 3);
-            const startDate = tempDateStart.toISOString().slice(0, 16);
-            let tempDateEnd = new Date(endSearchTerm);
-            tempDateEnd.setHours(tempDateEnd.getHours() + 3);
-            const endDate = tempDateEnd.toISOString().slice(0, 16);
             const betweenTwoDatesWithDoctor =
-              await getAppointmentBetweenTwoDates(startDate, endDate);
+              await getAppointmentBetweenTwoDates(
+                startSearchTerm,
+                endSearchTerm
+              );
             results = [];
             results = [...results, ...betweenTwoDatesWithDoctor];
           } else if (startTrim !== "" && endTrim === "") {
-            let tempDateStart = new Date(startSearchTerm);
-            tempDateStart.setHours(tempDateStart.getHours() + 3);
-            const startDate = tempDateStart.toISOString().slice(0, 16);
-            const startDates = await getAppointmentAfterDate(startDate);
+            const startDates = await getAppointmentAfterDate(startSearchTerm);
             results = [];
             results = [...results, ...startDates];
           } else if (endTrim !== "" && startTrim === "") {
-            let tempDateEnd = new Date(endSearchTerm);
-            tempDateEnd.setHours(tempDateEnd.getHours() + 3);
-            const endDate = tempDateEnd.toISOString().slice(0, 16);
-            const endDates = await getAppointmentBeforeDate(endDate);
+            const endDates = await getAppointmentBeforeDate(endSearchTerm);
             results = [];
             results = [...results, ...endDates];
           }
