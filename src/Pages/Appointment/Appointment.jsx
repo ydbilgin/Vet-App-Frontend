@@ -182,6 +182,9 @@ const Appointment = () => {
             let tempDateStart = new Date(startSearchTerm);
             tempDateStart.setHours(tempDateStart.getHours() + 3);
             const startDate = tempDateStart.toISOString().slice(0, 16);
+            console.log(startSearchTerm);
+            console.log(tempDateStart);
+            console.log(startDate);
 
             const startAndDoctor = await getAppointmentAfterDateWithDoctor(
               startDate,
@@ -193,6 +196,9 @@ const Appointment = () => {
             let tempDateEnd = new Date(endSearchTerm);
             tempDateEnd.setHours(tempDateEnd.getHours() + 3);
             const endDate = tempDateEnd.toISOString().slice(0, 16);
+            console.log(endSearchTerm);
+            console.log(tempDateEnd);
+            console.log(endDate);
             const endAndDoctor = await getAppointmentBeforeDateWithDoctor(
               endDate,
               doctorSearchTerm
@@ -206,6 +212,13 @@ const Appointment = () => {
             let tempDateEnd = new Date(endSearchTerm);
             tempDateEnd.setHours(tempDateEnd.getHours() + 3);
             const endDate = tempDateEnd.toISOString().slice(0, 16);
+
+            console.log(startSearchTerm);
+            console.log(tempDateStart);
+            console.log(startDate);
+            onsole.log(endSearchTerm);
+            console.log(tempDateEnd);
+            console.log(endDate);
             const betweenTwoDatesWithDoctor =
               await getAppointmentBetweenTwoDatesWithDoctor(
                 startDate,
