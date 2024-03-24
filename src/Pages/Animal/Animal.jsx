@@ -346,7 +346,7 @@ function Animal() {
           ))}
         </select>
         <button className="animal-add-button" onClick={handleCreate}>
-          Create
+          Ekle
         </button>
       </div>
       {isAnimalEditModalOpen && (
@@ -425,7 +425,7 @@ function Animal() {
                 ))}
               </select>
               <button className="animal-add-button" onClick={handleUpdate}>
-                Update
+                Güncelle
               </button>
             </div>
           </div>

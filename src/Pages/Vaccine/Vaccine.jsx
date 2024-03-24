@@ -122,11 +122,7 @@ function Vaccine() {
         } else if (endTrim !== "") {
           const endDates = await getVaccineBeforeDate(endSearchTerm);
           results = endDates;
-        } else if (
-          animalTrim === "" &&
-          startTrim.trim() === "" &&
-          endTrim.trim() === ""
-        ) {
+        } else if (animalTrim === "" && startTrim === "" && endTrim === "") {
           const data = await getVaccines();
           setResults(data);
           return;
