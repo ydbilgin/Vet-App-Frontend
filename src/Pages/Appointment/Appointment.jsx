@@ -359,16 +359,6 @@ const Appointment = () => {
         <div className="appointment-add">
           <h3>Randevu Ekle</h3>
 
-          <input
-            type="datetime-local"
-            id="appointmentDate"
-            name="appointmentDate"
-            placeholder="Tarih seçiniz"
-            value={newAppointment.appointmentDate}
-            onChange={handleNewAppointment}
-            required
-          />
-
           <select
             name="doctorId"
             value={newAppointment.doctor.id}
@@ -400,6 +390,16 @@ const Appointment = () => {
               </option>
             ))}
           </select>
+
+          <input
+            type="datetime-local"
+            id="appointmentDate"
+            name="appointmentDate"
+            placeholder="Tarih seçiniz"
+            value={newAppointment.appointmentDate}
+            onChange={handleNewAppointment}
+            required
+          />
 
           <button className="appointment-add-button" onClick={handleCreate}>
             Add
