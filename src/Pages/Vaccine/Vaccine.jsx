@@ -86,6 +86,9 @@ function Vaccine() {
         const startTrim = startSearchTerm.trim();
         const endTrim = endSearchTerm.trim();
 
+        // Temizleme
+        setResults([]);
+
         if (animalTrim === "" && startTrim === "" && endTrim === "") {
           const data = await getVaccines();
           setResults(data);
