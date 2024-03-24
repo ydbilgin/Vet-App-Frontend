@@ -37,6 +37,19 @@ export const getAppointmentBetweenTwoDates = async (startDate, endDate) => {
   return data;
 };
 
+export const getAppointmentBetweenTwoDatesWithDoctor = async (
+  startDate,
+  endDate,
+  name
+) => {
+  const { data } = await axios.get(
+    `${BASE_URL}/appointment/expiring/${name}/${encodeURIComponent(
+      startDate
+    )}/${encodeURIComponent(endDate)}`
+  );
+  return data;
+};
+
 export const getAppointmentBeforeDate = async (endDate) => {
   const { data } = await axios.get(
     `${BASE_URL}/appointment/expiring-before/${encodeURIComponent(endDate)}`
@@ -44,9 +57,26 @@ export const getAppointmentBeforeDate = async (endDate) => {
   return data;
 };
 
+export const getAppointmentBeforeDateWithDoctor = async (endDate, name) => {
+  const { data } = await axios.get(
+    `${BASE_URL}/appointment/expiring-before/${name}/${encodeURIComponent(
+      endDate
+    )}`
+  );
+  return data;
+};
+
 export const getAppointmentAfterDate = async (startDate) => {
   const { data } = await axios.get(
     `${BASE_URL}/appointment/expiring-after/${encodeURIComponent(startDate)}`
+  );
+  return data;
+};
+export const getAppointmentAfterDateWithDoctor = async (startDate, name) => {
+  const { data } = await axios.get(
+    `${BASE_URL}/appointment/expiring-after/${name}/${encodeURIComponent(
+      startDate
+    )}`
   );
   return data;
 };

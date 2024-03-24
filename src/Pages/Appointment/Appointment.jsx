@@ -9,6 +9,9 @@ import {
   getAppointmentBeforeDate,
   getAppointmentBetweenTwoDates,
   getAppointmentByDoctor,
+  getAppointmentAfterDateWithDoctor,
+  getAppointmentBeforeDateWithDoctor,
+  getAppointmentBetweenTwoDatesWithDoctor,
 } from "../../API/appointment";
 import { getAvailableDatesByDoctorId } from "../../API/available-date";
 import DeleteIcon from "@mui/icons-material/Delete";

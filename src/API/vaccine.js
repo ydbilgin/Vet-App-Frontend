@@ -32,6 +32,17 @@ export const getVaccineBetweenTwoDates = async (startDate, endDate) => {
   return data;
 };
 
+export const getVaccineBetweenTwoDatesWithAnimal = async (
+  startDate,
+  endDate,
+  name
+) => {
+  const { data } = await axios.get(
+    `${BASE_URL}/vaccine/expiring/${name}/${startDate}/${endDate}`
+  );
+  return data;
+};
+
 export const getVaccineBeforeDate = async (endDate) => {
   const { data } = await axios.get(
     `${BASE_URL}/vaccine/expiring-before/${endDate}`
@@ -39,9 +50,22 @@ export const getVaccineBeforeDate = async (endDate) => {
   return data;
 };
 
+export const getVaccineBeforeDateWithAnimal = async (endDate, name) => {
+  const { data } = await axios.get(
+    `${BASE_URL}/vaccine/expiring-before/${name}/${endDate}`
+  );
+  return data;
+};
+
 export const getVaccineAfterDate = async (startDate) => {
   const { data } = await axios.get(
     `${BASE_URL}/vaccine/expiring-after/${startDate}`
+  );
+  return data;
+};
+export const getVaccineAfterDateWithAnimal = async (startDate, name) => {
+  const { data } = await axios.get(
+    `${BASE_URL}/vaccine/expiring-after/${name}/${startDate}`
   );
   return data;
 };

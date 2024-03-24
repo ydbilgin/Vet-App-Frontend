@@ -8,6 +8,9 @@ import {
   getVaccineBeforeDate,
   getVaccineAfterDate,
   getVaccineByAnimal,
+  getVaccineAfterDateWithAnimal,
+  getVaccineBeforeDateWithAnimal,
+  getVaccineBetweenTwoDatesWithAnimal,
 } from "../../API/vaccine";
 import { getReports } from "../../API/report";
 import "./Vaccine.css";
@@ -79,31 +82,56 @@ function Vaccine() {
     const fetchResults = async () => {
       try {
         let results = [];
-        if (animalSearchTerm.trim() !== "") {
+        const animalTrim = animalSearchTerm.trim();
+        const startTrim = startSearchTerm.trim();
+        const endTrim = endSearchTerm.trim();
+        if (animalTrim !== "") {
           const byAnimal = await getVaccineByAnimal(animalSearchTerm);
           results = [...results, ...byAnimal];
+          if (startTrim !== "") {
+            const startAndAnimal = await getVaccineAfterDateWithAnimal(
+              startSearchTerm,
+              animalSearchTerm
+            );
+            results = startAndAnimal;
+          } else if (endTrim !== "") {
+            const endAndAnimal = await getVaccineBeforeDateWithAnimal(
+              endSearchTerm,
+              animalSearchTerm
+            );
+            results = endAndAnimal;
+          } else if (startTrim !== "" && endTrim !== "") {
+            const betweenTwoDatesWithAnimal =
+              await getVaccineBetweenTwoDatesWithAnimal(
+                startSearchTerm,
+                endSearchTerm,
+                animalSearchTerm
+              );
+            results = betweenTwoDatesWithAnimal;
+          }
         }
-        if (startSearchTerm.trim() !== "" && endSearchTerm.trim() !== "") {
+        if (startTrim !== "" && endTrim !== "") {
           const betweenTwoDates = await getVaccineBetweenTwoDates(
             startSearchTerm,
             endSearchTerm
           );
           results = betweenTwoDates;
-        } else if (startSearchTerm.trim() !== "") {
+        } else if (startTrim !== "") {
           const startDates = await getVaccineAfterDate(startSearchTerm);
           results = startDates;
-        } else if (endSearchTerm.trim() !== "") {
+        } else if (endTrim !== "") {
           const endDates = await getVaccineBeforeDate(endSearchTerm);
           results = endDates;
         } else if (
-          animalSearchTerm.trim() === "" &&
-          startSearchTerm.trim() === "" &&
-          endSearchTerm.trim() === ""
+          animalTrim === "" &&
+          startTrim.trim() === "" &&
+          endTrim.trim() === ""
         ) {
           const data = await getVaccines();
           setResults(data);
           return;
         }
+
         setResults(results);
       } catch (error) {
         console.error(error);
