@@ -91,6 +91,7 @@ function Vaccine() {
           setResults(data);
           return;
         }
+        // Sadece bir kere temizle
         setResults([]);
 
         if (animalTrim !== "") {
