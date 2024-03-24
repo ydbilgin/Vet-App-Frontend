@@ -123,7 +123,7 @@ function Vaccine() {
                 endSearchTerm,
                 animalSearchTerm
               );
-            console.log(betweenTwoDatesWithAnimal);
+            results = [];
             results = betweenTwoDatesWithAnimal;
             console.log(results);
           }
