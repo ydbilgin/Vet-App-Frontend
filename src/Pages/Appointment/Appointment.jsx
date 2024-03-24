@@ -127,9 +127,7 @@ const Appointment = () => {
           results = [...results, ...byDoctor];
           if (startTrim !== "" && endTrim === "") {
             console.log("doktor dolu start dolu end boş");
-
             console.log(startSearchTerm);
-
             const startAndDoctor = await getAppointmentAfterDateWithDoctor(
               startSearchTerm,
               doctorSearchTerm
@@ -180,10 +178,7 @@ const Appointment = () => {
             results = [...results, ...endDates];
           }
         }
-        results = results.filter(
-          (item, index, self) =>
-            index === self.findIndex((t) => t.id === item.id)
-        );
+
         setResults(results);
       } catch (error) {
         console.error(error);
