@@ -166,7 +166,7 @@ const Appointment = () => {
             console.log(startSearchTerm);
             console.log(tempDateStart);
             console.log(startDate);
-            onsole.log(endSearchTerm);
+            console.log(endSearchTerm);
             console.log(tempDateEnd);
             console.log(endDate);
             const betweenTwoDatesWithDoctor =
