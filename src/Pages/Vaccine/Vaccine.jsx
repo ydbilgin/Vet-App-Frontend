@@ -95,6 +95,27 @@ function Vaccine() {
         if (animalTrim !== "") {
           const byAnimal = await getVaccineByAnimal(animalSearchTerm);
           results = [...results, ...byAnimal];
+          if (startTrim !== "") {
+            const startAndAnimal = await getVaccineAfterDateWithAnimal(
+              startSearchTerm,
+              animalSearchTerm
+            );
+            results = startAndAnimal;
+          } else if (endTrim !== "") {
+            const endAndAnimal = await getVaccineBeforeDateWithAnimal(
+              endSearchTerm,
+              animalSearchTerm
+            );
+            results = endAndAnimal;
+          } else if (startTrim !== "" && endTrim !== "") {
+            const betweenTwoDatesWithAnimal =
+              await getVaccineBetweenTwoDatesWithAnimal(
+                startSearchTerm,
+                endSearchTerm,
+                animalSearchTerm
+              );
+            results = betweenTwoDatesWithAnimal;
+          }
         }
 
         if (startTrim !== "" && endTrim !== "") {
