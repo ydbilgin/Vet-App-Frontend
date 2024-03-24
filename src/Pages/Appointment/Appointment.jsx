@@ -109,48 +109,68 @@ const Appointment = () => {
     const fetchResults = async () => {
       try {
         let results = [];
-        if (doctorSearchTerm.trim() !== "") {
-          const byDoctor = await getAppointmentByDoctor(doctorSearchTerm);
-          results = [...results, ...byDoctor];
-        }
-        if (startSearchTerm.trim() !== "" && endSearchTerm.trim() !== "") {
-          let tempDateStart = new Date(startSearchTerm);
-          let tempDateEnd = new Date(endSearchTerm);
-          tempDateStart.setHours(tempDateStart.getHours() + 3);
-          tempDateEnd.setHours(tempDateEnd.getHours() + 3);
-          const startDate = tempDateStart.toISOString().slice(0, 16);
-          const endDate = tempDateEnd.toISOString().slice(0, 16);
+        const doctorTrim = doctorSearchTerm.trim();
+        const startTrim = startSearchTerm.trim();
+        const endTrim = endSearchTerm.trim();
 
-          const betweenTwoDates = await getAppointmentBetweenTwoDates(
-            startDate,
-            endDate
-          );
-          results = betweenTwoDates;
-        } else if (startSearchTerm.trim() !== "") {
-          let tempDate = new Date(startSearchTerm);
-          tempDate.setHours(tempDate.getHours() + 3);
-          const startDates = await getAppointmentAfterDate(
-            tempDate.toISOString().slice(0, 16)
-          );
-          results = startDates;
-        } else if (endSearchTerm.trim() !== "") {
-          let tempDate = new Date(endSearchTerm);
-          tempDate.setHours(tempDate.getHours() + 3);
-
-          const endDates = await getAppointmentBeforeDate(
-            tempDate.toISOString().slice(0, 16)
-          );
-
-          results = endDates;
-        } else if (
-          doctorSearchTerm.trim() === "" &&
-          startSearchTerm.trim() === "" &&
-          endSearchTerm === ""
-        ) {
+        if (doctorTrim === "" && startTrim === "" && endTrim === "") {
           const data = await getAppointments();
           setResults(data);
           return;
         }
+        setResults([]);
+
+        if (doctorTrim !== "") {
+          const byDoctor = await getAppointmentByDoctor(doctorSearchTerm);
+          results = [];
+          results = [...results, ...byDoctor];
+          if (startTrim !== "" && endTrim === "") {
+            const startAndDoctor = await getAppointmentAfterDateWithDoctor(
+              startSearchTerm,
+              doctorSearchTerm
+            );
+            results = [];
+            results = startAndDoctor;
+          } else if (endTrim !== "" && startTrim === "") {
+            const endAndDoctor = await getAppointmentBeforeDateWithDoctor(
+              endSearchTerm,
+              doctorSearchTerm
+            );
+            results = [];
+            results = endAndDoctor;
+          } else if (startTrim !== "" && endTrim !== "") {
+            const betweenTwoDatesWithDoctor =
+              await getAppointmentBetweenTwoDatesWithDoctor(
+                startSearchTerm,
+                endSearchTerm,
+                doctorSearchTerm
+              );
+            results = [];
+            results = betweenTwoDatesWithDoctor;
+          }
+        } else {
+          if (startTrim !== "" && endTrim !== "") {
+            const betweenTwoDatesWithDoctor =
+              await getAppointmentBetweenTwoDates(
+                startSearchTerm,
+                endSearchTerm
+              );
+            results = [];
+            results = [...results, ...betweenTwoDatesWithDoctor];
+          } else if (startTrim !== "" && endTrim === "") {
+            const startDates = await getAppointmentAfterDate(startSearchTerm);
+            results = [];
+            results = [...results, ...startDates];
+          } else if (endTrim !== "" && startTrim === "") {
+            const endDates = await getAppointmentBeforeDate(endSearchTerm);
+            results = [];
+            results = [...results, ...endDates];
+          }
+        }
+        results = results.filter(
+          (item, index, self) =>
+            index === self.findIndex((t) => t.id === item.id)
+        );
         setResults(results);
       } catch (error) {
         console.error(error);
