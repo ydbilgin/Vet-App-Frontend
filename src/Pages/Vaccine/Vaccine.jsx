@@ -97,7 +97,7 @@ function Vaccine() {
 
         if (animalTrim !== "") {
           console.log("animal boş değilse");
-          if (startTrim !== "") {
+          if (startTrim !== "" && endTrim ==="") {
             console.log("animal boş değilse start boş değilse");
             const startAndAnimal = await getVaccineAfterDateWithAnimal(
               startSearchTerm,
@@ -105,7 +105,7 @@ function Vaccine() {
             );
             results = startAndAnimal;
             console.log(results);
-          } else if (endTrim !== "") {
+          } else if (endTrim !== "" && startTrim ==="") {
             console.log("animal boş değilse end boş değilse");
 
             const endAndAnimal = await getVaccineBeforeDateWithAnimal(
@@ -143,13 +143,13 @@ function Vaccine() {
               );
             results = [...results, ...betweenTwoDatesWithAnimal];
             console.log(results);
-          } else if (startTrim !== "") {
+          } else if (startTrim !== "" && endTrim ==="") {
             console.log("animal boşsa start boş değilse");
 
             const startDates = await getVaccineAfterDate(startSearchTerm);
             results = [...results, ...startDates];
             console.log(results);
-          } else if (endTrim !== "") {
+          } else if (endTrim !== "" startTrim === "") {
             console.log("animal boşsa end boş değilse");
 
             const endDates = await getVaccineBeforeDate(endSearchTerm);
