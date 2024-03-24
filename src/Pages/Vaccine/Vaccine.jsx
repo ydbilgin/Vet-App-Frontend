@@ -117,25 +117,24 @@ function Vaccine() {
           }
           const byAnimal = await getVaccineByAnimal(animalSearchTerm);
           results = [...results, ...byAnimal];
-        }
-        setResults([]);
-
-        if (startTrim !== "" && endTrim !== "") {
-          const betweenTwoDatesWithAnimal =
-            await getVaccineBetweenTwoDatesWithAnimal(
-              startSearchTerm,
-              endSearchTerm,
-              animalSearchTerm
-            );
-          results = [...results, ...betweenTwoDatesWithAnimal];
         } else {
-          if (startTrim !== "") {
-            const startDates = await getVaccineAfterDate(startSearchTerm);
-            results = [...results, ...startDates];
-          }
-          if (endTrim !== "") {
-            const endDates = await getVaccineBeforeDate(endSearchTerm);
-            results = [...results, ...endDates];
+          if (startTrim !== "" && endTrim !== "") {
+            const betweenTwoDatesWithAnimal =
+              await getVaccineBetweenTwoDatesWithAnimal(
+                startSearchTerm,
+                endSearchTerm,
+                animalSearchTerm
+              );
+            results = [...results, ...betweenTwoDatesWithAnimal];
+          } else {
+            if (startTrim !== "") {
+              const startDates = await getVaccineAfterDate(startSearchTerm);
+              results = [...results, ...startDates];
+            }
+            if (endTrim !== "") {
+              const endDates = await getVaccineBeforeDate(endSearchTerm);
+              results = [...results, ...endDates];
+            }
           }
         }
 
