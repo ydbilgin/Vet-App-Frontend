@@ -91,6 +91,7 @@ function Vaccine() {
           setResults(data);
           return;
         }
+        setResults([]);
 
         if (animalTrim !== "") {
           if (startTrim !== "") {
@@ -117,6 +118,7 @@ function Vaccine() {
           const byAnimal = await getVaccineByAnimal(animalSearchTerm);
           results = [...results, ...byAnimal];
         }
+        setResults([]);
 
         if (startTrim !== "" && endTrim !== "") {
           const betweenTwoDatesWithAnimal =
