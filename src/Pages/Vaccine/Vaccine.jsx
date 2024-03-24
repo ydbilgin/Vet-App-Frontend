@@ -96,6 +96,9 @@ function Vaccine() {
         setResults([]);
 
         if (animalTrim !== "") {
+          const byAnimal = await getVaccineByAnimal(animalSearchTerm);
+          results = [...results, ...byAnimal];
+          console.log(results);
           console.log("animal boş değilse");
           if (startTrim !== "" && endTrim === "") {
             console.log("animal boş değilse start boş değilse");
@@ -103,6 +106,7 @@ function Vaccine() {
               startSearchTerm,
               animalSearchTerm
             );
+            results = [];
             results = startAndAnimal;
             console.log(results);
           } else if (endTrim !== "" && startTrim === "") {
@@ -112,6 +116,7 @@ function Vaccine() {
               endSearchTerm,
               animalSearchTerm
             );
+            results = [];
             results = endAndAnimal;
             console.log(results);
           } else if (startTrim !== "" && endTrim !== "") {
@@ -127,9 +132,6 @@ function Vaccine() {
             results = betweenTwoDatesWithAnimal;
             console.log(results);
           }
-          const byAnimal = await getVaccineByAnimal(animalSearchTerm);
-          results = [...results, ...byAnimal];
-          console.log(results);
         } else {
           console.log("animal boşsa");
 
@@ -140,6 +142,7 @@ function Vaccine() {
               startSearchTerm,
               endSearchTerm
             );
+            results = [];
             results = [...results, ...betweenTwoDatesWithAnimal];
             console.log(results);
           } else if (startTrim !== "" && endTrim === "") {
@@ -147,12 +150,14 @@ function Vaccine() {
 
             const startDates = await getVaccineAfterDate(startSearchTerm);
             console.log(startDates);
+            results = [];
             results = [...results, ...startDates];
             console.log(results);
           } else if (endTrim !== "" && startTrim === "") {
             console.log("animal boşsa end boş değilse");
 
             const endDates = await getVaccineBeforeDate(endSearchTerm);
+            results = [];
             results = [...results, ...endDates];
             console.log(results);
           }
