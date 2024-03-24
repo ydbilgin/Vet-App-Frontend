@@ -85,47 +85,35 @@ function Vaccine() {
         const animalTrim = animalSearchTerm.trim();
         const startTrim = startSearchTerm.trim();
         const endTrim = endSearchTerm.trim();
-        if (animalTrim !== "") {
-          const byAnimal = await getVaccineByAnimal(animalSearchTerm);
-          results = [...results, ...byAnimal];
-          if (startTrim !== "") {
-            const startAndAnimal = await getVaccineAfterDateWithAnimal(
-              startSearchTerm,
-              animalSearchTerm
-            );
-            results = startAndAnimal;
-          } else if (endTrim !== "") {
-            const endAndAnimal = await getVaccineBeforeDateWithAnimal(
-              endSearchTerm,
-              animalSearchTerm
-            );
-            results = endAndAnimal;
-          } else if (startTrim !== "" && endTrim !== "") {
-            const betweenTwoDatesWithAnimal =
-              await getVaccineBetweenTwoDatesWithAnimal(
-                startSearchTerm,
-                endSearchTerm,
-                animalSearchTerm
-              );
-            results = betweenTwoDatesWithAnimal;
-          }
-        }
-        if (startTrim !== "" && endTrim !== "") {
-          const betweenTwoDates = await getVaccineBetweenTwoDates(
-            startSearchTerm,
-            endSearchTerm
-          );
-          results = betweenTwoDates;
-        } else if (startTrim !== "") {
-          const startDates = await getVaccineAfterDate(startSearchTerm);
-          results = startDates;
-        } else if (endTrim !== "") {
-          const endDates = await getVaccineBeforeDate(endSearchTerm);
-          results = endDates;
-        } else if (animalTrim === "" && startTrim === "" && endTrim === "") {
+
+        if (animalTrim === "" && startTrim === "" && endTrim === "") {
           const data = await getVaccines();
           setResults(data);
           return;
+        }
+
+        if (animalTrim !== "") {
+          const byAnimal = await getVaccineByAnimal(animalSearchTerm);
+          results.push(...byAnimal);
+        }
+
+        if (startTrim !== "" && endTrim !== "") {
+          const betweenTwoDatesWithAnimal =
+            await getVaccineBetweenTwoDatesWithAnimal(
+              startSearchTerm,
+              endSearchTerm,
+              animalSearchTerm
+            );
+          results.push(...betweenTwoDatesWithAnimal);
+        } else {
+          if (startTrim !== "") {
+            const startDates = await getVaccineAfterDate(startSearchTerm);
+            results.push(...startDates);
+          }
+          if (endTrim !== "") {
+            const endDates = await getVaccineBeforeDate(endSearchTerm);
+            results.push(...endDates);
+          }
         }
 
         setResults(results);
