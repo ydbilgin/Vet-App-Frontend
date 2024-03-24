@@ -104,60 +104,6 @@ const Appointment = () => {
       });
     setReload(false);
   }, [reload]);
-  useEffect(() => {
-    const fetchResults = async () => {
-      try {
-        let results = [];
-        if (doctorSearchTerm.trim() !== "") {
-          const byDoctor = await getAppointmentByDoctor(doctorSearchTerm);
-          results = [...results, ...byDoctor];
-        }
-        if (startSearchTerm.trim() !== "" && endSearchTerm.trim() !== "") {
-          let tempDateStart = new Date(startSearchTerm);
-          tempDateStart.setHours(tempDateStart.getHours() + 3);
-          const startDate = tempDateStart.toISOString().slice(0, 16);
-          let tempDateEnd = new Date(endSearchTerm);
-          tempDateEnd.setHours(tempDateEnd.getHours() + 3);
-          const endDate = tempDateEnd.toISOString().slice(0, 16);
-
-          const betweenTwoDates = await getAppointmentBetweenTwoDates(
-            startDate,
-            endDate
-          );
-          results = betweenTwoDates;
-        } else if (startSearchTerm.trim() !== "") {
-          let tempDate = new Date(startSearchTerm);
-          tempDate.setHours(tempDate.getHours() + 3);
-          const startDates = await getAppointmentAfterDate(
-            tempDate.toISOString().slice(0, 16)
-          );
-          results = startDates;
-        } else if (endSearchTerm.trim() !== "") {
-          let tempDate = new Date(endSearchTerm);
-          tempDate.setHours(tempDate.getHours() + 3);
-
-          const endDates = await getAppointmentBeforeDate(
-            tempDate.toISOString().slice(0, 16)
-          );
-
-          results = endDates;
-        } else if (
-          doctorSearchTerm.trim() === "" &&
-          startSearchTerm.trim() === "" &&
-          endSearchTerm === ""
-        ) {
-          const data = await getAppointments();
-          setResults(data);
-          return;
-        }
-        setResults(results);
-      } catch (error) {
-        console.error(error);
-        setResults([]);
-      }
-    };
-    fetchResults();
-  }, [doctorSearchTerm, startSearchTerm, endSearchTerm]);
 
   useEffect(() => {
     const fetchResults = async () => {
