@@ -86,9 +86,6 @@ function Vaccine() {
         const startTrim = startSearchTerm.trim();
         const endTrim = endSearchTerm.trim();
 
-        // Temizleme
-        setResults([]);
-
         if (animalTrim === "" && startTrim === "" && endTrim === "") {
           const data = await getVaccines();
           setResults(data);
@@ -97,7 +94,7 @@ function Vaccine() {
 
         if (animalTrim !== "") {
           const byAnimal = await getVaccineByAnimal(animalSearchTerm);
-          results.push(...byAnimal);
+          results = [...results, ...byAnimal];
         }
 
         if (startTrim !== "" && endTrim !== "") {
@@ -107,15 +104,15 @@ function Vaccine() {
               endSearchTerm,
               animalSearchTerm
             );
-          results.push(...betweenTwoDatesWithAnimal);
+          results = [...results, ...betweenTwoDatesWithAnimal];
         } else {
           if (startTrim !== "") {
             const startDates = await getVaccineAfterDate(startSearchTerm);
-            results.push(...startDates);
+            results = [...results, ...startDates];
           }
           if (endTrim !== "") {
             const endDates = await getVaccineBeforeDate(endSearchTerm);
-            results.push(...endDates);
+            results = [...results, ...endDates];
           }
         }
 
