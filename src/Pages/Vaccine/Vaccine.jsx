@@ -147,6 +147,7 @@ function Vaccine() {
             console.log("animal boşsa start boş değilse");
 
             const startDates = await getVaccineAfterDate(startSearchTerm);
+            console.log(startDates);
             results = [...results, ...startDates];
             console.log(results);
           } else if (endTrim !== "" && startTrim === "") {
