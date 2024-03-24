@@ -138,6 +138,10 @@ function Vaccine() {
             }
           }
         }
+        results = results.filter(
+          (item, index, self) =>
+            index === self.findIndex((t) => t.id === item.id)
+        );
 
         setResults(results);
       } catch (error) {
